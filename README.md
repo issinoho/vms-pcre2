@@ -185,7 +185,8 @@ build at the install tree, for example with
    [v10.49-vms1](https://github.com/issinoho/vms-pcre2/releases/tag/v10.49-vms1).
 3. A port to OpenVMS **Alpha**, alongside IA64 and x86-64.
 4. Next port: **GNU sed**, following on from grep and PCRE2 with exactly the same methods
-   and roadmap ([vms-sed](https://github.com/issinoho/vms-sed)).
+   and roadmap ([vms-sed](https://github.com/issinoho/vms-sed)). Under way.
+5. Then **GNU awk** (gawk), the same way ([vms-awk](https://github.com/issinoho/vms-awk)).
 
 ## Artwork
 
