@@ -20,7 +20,7 @@ Work in progress.
 
 | | IA64 | x86-64 |
 |---|---|---|
-| Library (8-bit, Unicode, no JIT) builds with MMS | yes | not yet tried |
+| Library (8-bit, Unicode, no JIT) builds with MMS | yes | yes |
 | `pcre2test` test suites | not yet | not yet |
 | Used by grep for `grep -P` | not yet | not yet |
 | PCSI kit | planned | planned |
@@ -65,6 +65,14 @@ tools/build.sh x86
 ```
 
 Node access works as in vms-grep: `tools/nodes.conf` (git-ignored) and an ssh key.
+
+## Roadmap
+
+1. Run the `pcre2test` test suites on both architectures.
+2. Build grep against this library to enable `grep -P`
+   ([vms-grep](https://github.com/issinoho/vms-grep)).
+3. A PCSI kit for PCRE2 itself (library, headers, `pcre2test`).
+4. A port to OpenVMS **Alpha**, alongside IA64 and x86-64.
 
 ## Artwork
 

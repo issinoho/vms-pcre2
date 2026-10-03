@@ -22,6 +22,7 @@ $ goto done
 $arch_ok:
 $ if f$search("OBJ_''arch'.DIR") .eqs. "" then create/directory [.OBJ_'arch']
 $ if f$search("[.OBJ_''arch']LIB.DIR") .eqs. "" then create/directory [.OBJ_'arch'.LIB]
+$ if f$search("[.OBJ_''arch']POSIX.DIR") .eqs. "" then create/directory [.OBJ_'arch'.POSIX]
 $ if f$search("BIN_''arch'.DIR") .eqs. "" then create/directory [.BIN_'arch']
 $ if f$search("[.INSTALL_''arch']INCLUDE.DIR") .eqs. "" then create/directory [.INSTALL_'arch'.INCLUDE]
 $ if f$search("[.INSTALL_''arch']LIB.DIR") .eqs. "" then create/directory [.INSTALL_'arch'.LIB]

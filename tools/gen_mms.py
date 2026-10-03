@@ -5,7 +5,8 @@ Usage: gen_mms.py <CMakeLists.txt> <ccflags.txt> > sources.mms
 
 The library sources are PCRE2_SOURCES from upstream's CMakeLists.txt, so a
 new release's additions are picked up automatically.  Library objects go to
-$(LOBJ) (so the librarian can take them by wildcard), pcre2test to $(OBJ).
+$(LOBJ) (so the librarian can take them by wildcard), the POSIX wrapper to
+$(POBJ), pcre2test to $(OBJ).
 VSI C accepts a single /DEFINE, so the defines from ccflags.txt are split
 out into CC_DEFS for descrip.mms to merge with its own.
 """
@@ -26,11 +27,11 @@ def pcre2_sources(cmake):
     return files
 
 
-def rule(obj, path):
+def rule(obj, path, flags='$(LIB_CFLAGS)'):
     d, f = os.path.split(path)
     vdir = '[.' + '.'.join(p.upper() for p in d.split('/')) + ']' if d else '[]'
     return ['%s : %s%s' % (obj, vdir, f),
-            '\t$(CC) $(CFLAGS) /OBJECT=$(MMS$TARGET) $(MMS$SOURCE)', '']
+            '\t$(CC) %s /OBJECT=$(MMS$TARGET) $(MMS$SOURCE)' % flags, '']
 
 
 def main():
@@ -51,9 +52,14 @@ def main():
         rules += rule(obj, s)
     out.append('LIB_OBJS = ' + ', -\n\t'.join(objs))
     out.append('')
+    # The POSIX wrapper is a separate library, as upstream's libpcre2-posix.
+    out.append('POSIX_OBJS = $(POBJ)pcre2posix.OBJ')
+    out.append('')
+    rules += rule('$(POBJ)pcre2posix.OBJ', 'src/pcre2posix.c')
+    # pcre2test sets PCRE2_CODE_UNIT_WIDTH itself, so it gets the plain flags.
     out.append('TEST_OBJS = $(OBJ)pcre2test.OBJ')
     out.append('')
-    rules += rule('$(OBJ)pcre2test.OBJ', 'src/pcre2test.c')
+    rules += rule('$(OBJ)pcre2test.OBJ', 'src/pcre2test.c', '$(CFLAGS)')
     print('\n'.join(out + rules))
 
 

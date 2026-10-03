@@ -34,3 +34,7 @@ define HAVE_REALPATH
 
 # VSI C 7.x has no __builtin_* or __attribute__ support: leave
 # HAVE_BUILTIN_*, HAVE_ATTRIBUTE_UNINITIALIZED and HAVE_VISIBILITY undefined.
+
+# VSI C on IA64 warns that printf's %zu/%td are "not supported or not fully
+# supported" (they work at run time); pcre2test then uses %lu/%ld instead.
+define DISABLE_PERCENT_ZT
