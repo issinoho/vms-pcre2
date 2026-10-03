@@ -187,6 +187,8 @@ build at the install tree, for example with
 4. Next port: **GNU sed**, following on from grep and PCRE2 with exactly the same methods
    and roadmap ([vms-sed](https://github.com/issinoho/vms-sed)). Under way.
 5. Then **GNU awk** (gawk), the same way ([vms-awk](https://github.com/issinoho/vms-awk)).
+6. Then **GNU wget**, the same way ([vms-wget](https://github.com/issinoho/vms-wget)).
+7. Then **curl**, the same way ([vms-curl](https://github.com/issinoho/vms-curl)).
 
 ## Artwork
 
