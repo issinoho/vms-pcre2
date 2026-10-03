@@ -16,7 +16,6 @@ VSI C.
 
 ## Status
 
-
 | | IA64 | x86-64 |
 |---|---|---|
 | Library (8-bit, Unicode, no JIT) builds with MMS | yes | yes |
@@ -28,9 +27,13 @@ VSI C.
 
 - **`PCRE2-8.OLB`:** the 8-bit library as an object library, for static linking into
   programs such as grep.
+- **`PCRE2-POSIX.OLB`:** PCRE2's POSIX-style wrapper (`regcomp`/`regexec` as
+  `pcre2_regcomp`/`pcre2_regexec`), used together with `PCRE2-8.OLB`.
 - **`PCRE2TEST.EXE`:** PCRE2's test program, used to run the upstream test data on VMS.
-- **An install tree** (`[.INSTALL_<arch>]` with `INCLUDE/PCRE2.H` and `LIB/PCRE2-8.OLB`):
-  this is what other ports build against.
+- **An install tree** (`[.INSTALL_<arch>]`, with `[.INCLUDE]` holding `PCRE2.H` and
+  `PCRE2POSIX.H`, and `[.LIB]` holding both libraries): this is what other ports build
+  against.
+- **A PCSI kit** (`[.KIT_<arch>]`), which installs the same files system-wide.
 
 JIT compilation is not available: SLJIT has no OpenVMS support. Only the 8-bit code unit
 width is built.
@@ -70,8 +73,9 @@ links PCRE2 statically. The kit is for building your own programs.
 upstream.conf          upstream version, tarball URL, SHA-256, signing key fingerprint
 keys/                  the PCRE2 release signing key
 patches/               unified diffs against the upstream tree, applied in order (series)
-overlay/vms/           DESCRIP.MMS, BUILD.COM, and configuration (config/config-vms.txt)
-tools/                 host-side scripts: fetch, prepare, push, build (shared with vms-grep)
+overlay/vms/           DESCRIP.MMS, BUILD.COM, RUN_TESTS, configuration (config/config-vms.txt)
+  vms/kit/             PCSI kit: product description, PCRE2$STARTUP.COM, README.VMS, MAKE_KIT.COM
+tools/                 host-side scripts: fetch, prepare, push, build, test, kit, installcheck
 docs/                  documentation and images
 ```
 
@@ -139,6 +143,7 @@ system, keeping the directory structure. Then, on VMS:
 $ SET DEFAULT dev:[dir.PCRE2-10_49]
 $ @[.VMS]BUILD                    ! libraries, PCRE2TEST.EXE and the install tree
 $ @[.VMS]RUN_TESTS                ! pcre2test test suites (needs VSI Perl)
+$ @[.VMS.KIT]MAKE_KIT             ! PCSI kit -> [.KIT_<arch>]
 ```
 
 `@[.VMS]BUILD ALL KEEP_GOING` carries on past compile errors so that one run reports them
@@ -155,7 +160,12 @@ The same file works for both projects. Then:
 tools/build.sh ia64         # upload changed files, MMS build on the node
 tools/test.sh ia64          # pcre2test test suites
 tools/build.sh x86 && tools/test.sh x86
+tools/kit.sh ia64           # build, then make the PCSI kit -> out/kits/
+tools/installcheck.sh ia64  # install the kit, build a program against it, remove it
 ```
+
+`tools/installcheck.sh` changes the node's system while it runs (PCSI database,
+`SYS$COMMON:[PCRE2]`, the system logical name `PCRE2$ROOT`), and leaves it as it was.
 
 ### 3. Use the library
 
