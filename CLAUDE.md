@@ -26,6 +26,10 @@ here, so read it first. In short:
 tools/prepare.sh                         # fetch + verify, patch, overlay, config.h, MMS list
 tools/build.sh <ia64|x86> [ALL|CLEAN] [KEEP_GOING]
 tools/vms.sh <node> dcl '<cmd>' ...      # also run/batch/put/get
+tools/kit.sh <node>                      # build, then PCSI kit -> out/kits/ (producer ISSINOHO)
+tools/installcheck.sh <node>             # install kit, build a program against it, remove (changes system; ask first)
 ```
+
+Bump `VMS_PATCH_LEVEL` for any kit change and never reuse a kit version.
 
 Don't push without the user asking; the remote is `origin` (github.com/issinoho/vms-pcre2).

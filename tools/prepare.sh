@@ -53,4 +53,30 @@ python3 "$top/tools/gen_mms.py" "$stage/CMakeLists.txt" "$cfgdir/ccflags.txt" \
 printf 'VERSION=%s\nKIT_VERSION=%s-vms%s\n' "$UPSTREAM_VERSION" "$UPSTREAM_VERSION" \
     "$VMS_PATCH_LEVEL" > "$stage/vms/version.env"
 
+# --- PCSI kit inputs (vms/kit/MAKE_KIT.COM builds the kit on each node) ----
+step "PCSI kit inputs"
+: "${KIT_PRODUCER:=ISSINOHO}"
+major=${UPSTREAM_VERSION%%.*}; minor=${UPSTREAM_VERSION#*.}; minor=${minor%%.*}
+pcsiversion="V$major.$minor-$VMS_PATCH_LEVEL"
+kitversion="$UPSTREAM_VERSION-vms$VMS_PATCH_LEVEL"
+kit=$stage/vms/kit
+subst() {
+    sed -e "s/@PRODUCER@/$KIT_PRODUCER/g" -e "s/@BASE@/$1/g" \
+        -e "s/@PCSIVERSION@/$pcsiversion/g" -e "s/@VERSION@/$UPSTREAM_VERSION/g" \
+        -e "s/@KITVERSION@/$kitversion/g" -e "s/@ARCH@/$2/g"
+}
+for base in I64VMS X86VMS; do
+    subst $base "" < "$kit/pcre2.pcsi\$desc_template" > "$kit/PCRE2-$base.PCSI\$DESC"
+    subst $base "" < "$kit/pcre2.pcsi\$text_template" > "$kit/PCRE2-$base.PCSI\$TEXT"
+done
+rm -f "$kit/pcre2.pcsi\$desc_template" "$kit/pcre2.pcsi\$text_template"
+subst "" "IA64 and x86-64" < "$kit/readme.vms" > "$kit/README.VMS"; rm -f "$kit/readme.vms"
+mkdir -p "$kit/doc"
+cp "$stage/LICENCE.md" "$kit/doc/LICENCE.MD"
+cp "$stage/NEWS" "$kit/doc/NEWS."
+cp "$stage/doc/pcre2.txt" "$kit/doc/PCRE2.TXT"
+cp "$stage/doc/pcre2test.txt" "$kit/doc/PCRE2TEST.TXT"
+printf 'KIT_PRODUCER=%s\nPCSI_VERSION=%s\nKIT_VERSION=%s\n' "$KIT_PRODUCER" "$pcsiversion" \
+    "$kitversion" > "$kit/kit.env"
+
 step "staged $stage"

@@ -1,0 +1,51 @@
+PCRE2 for OpenVMS
+=================
+
+This is PCRE2 @VERSION@ (Perl-compatible regular expressions) built natively
+for OpenVMS @ARCH@, from the unmodified PCRE2 release plus the patches in
+the vms-pcre2 project:
+
+    https://github.com/issinoho/vms-pcre2
+
+Kit version: @KITVERSION@.  PCRE2 is distributed under the BSD licence with
+the PCRE2 exception; see LICENCE.MD.  The API is described in PCRE2.TXT and
+the test program in PCRE2TEST.TXT.
+
+What is installed
+-----------------
+    PCRE2$ROOT:[INCLUDE]PCRE2.H        the PCRE2 API
+    PCRE2$ROOT:[INCLUDE]PCRE2POSIX.H   the POSIX-style wrapper API
+    PCRE2$ROOT:[LIB]PCRE2-8.OLB        8-bit library (object library)
+    PCRE2$ROOT:[LIB]PCRE2-POSIX.OLB    POSIX wrapper (needs PCRE2-8.OLB)
+    PCRE2$ROOT:[BIN]PCRE2TEST.EXE      PCRE2's test program
+
+Only the 8-bit code unit width is built, with Unicode support.  There is
+no JIT compiler: PCRE2's JIT (SLJIT) does not support OpenVMS.
+
+Setting up
+----------
+The kit installs PCRE2$STARTUP.COM into SYS$STARTUP and runs it once.  To
+define PCRE2$ROOT at every boot, the system manager adds this line to
+SYS$MANAGER:SYSTARTUP_VMS.COM:
+
+    $ @SYS$STARTUP:PCRE2$STARTUP.COM
+
+Building a program against PCRE2
+--------------------------------
+    $ CC /NAMES=(AS_IS,SHORTENED) /INCLUDE=PCRE2$ROOT:[INCLUDE] -
+         /DEFINE=PCRE2_CODE_UNIT_WIDTH=8 myprog.c
+    $ LINK myprog, PCRE2$ROOT:[LIB]PCRE2-8.OLB/LIBRARY
+
+/NAMES=(AS_IS,SHORTENED) is required: several PCRE2 function names are
+longer than 31 characters, and they only match the library when both sides
+are compiled with the same /NAMES.  The POSIX wrapper links with
+PCRE2$ROOT:[LIB]PCRE2-POSIX.OLB/LIBRARY before PCRE2-8.OLB.
+
+pcre2test
+---------
+    $ pcre2test :== $PCRE2$ROOT:[BIN]PCRE2TEST.EXE
+    $ pcre2test "-C"
+
+Upper-case options such as -C need double quotes, or
+SET PROCESS/PARSE_STYLE=EXTENDED: traditional DCL parsing lower-cases
+unquoted arguments.

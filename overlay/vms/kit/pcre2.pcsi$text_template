@@ -1,0 +1,19 @@
+=product @PRODUCER@ @BASE@ PCRE2 @PCSIVERSION@ full
+1 'PRODUCER
+=prompt @PRODUCER@
+1 'PRODUCT
+=prompt PCRE2 @VERSION@ (Perl-compatible regular expressions) for OpenVMS
+1 'NOTICE
+=prompt PCRE2 is distributed under the BSD licence with the PCRE2 exception.
+1 RELEASE_NOTES
+=prompt Documentation is in [PCRE2.DOC]README.VMS under the installation directory.
+1 POST_INSTALL
+=prompt Post-installation tasks for PCRE2
+    At system startup: to define PCRE2$ROOT at every boot, add this line to
+    SYS$MANAGER:SYSTARTUP_VMS.COM:
+    $ @SYS$STARTUP:PCRE2$STARTUP.COM
+    Building against PCRE2: compile with
+    /NAMES=(AS_IS,SHORTENED)/INCLUDE=PCRE2$ROOT:[INCLUDE]/DEFINE=PCRE2_CODE_UNIT_WIDTH=8
+    and link with PCRE2$ROOT:[LIB]PCRE2-8.OLB/LIBRARY.
+
+PRODUCT REMOVE PCRE2 removes the product and deassigns PCRE2$ROOT.

@@ -23,7 +23,7 @@ Work in progress.
 | Library (8-bit, Unicode, no JIT) builds with MMS | yes | yes |
 | `pcre2test` test suites (8-bit, no JIT) | 23 pass, 0 fail | 23 pass, 0 fail (1 expected: locale data) |
 | Used by grep for `grep -P` ([v3.12-vms3](https://github.com/issinoho/vms-grep/releases/tag/v3.12-vms3)) | yes | yes |
-| PCSI kit | planned | planned |
+| PCSI kit (`ISSINOHO-<base>-PCRE2-V1049-1-1.PCSI`) | built | built |
 
 ## What gets built
 
@@ -35,6 +35,33 @@ Work in progress.
 
 JIT compilation is not available: SLJIT has no OpenVMS support. Only the 8-bit code unit
 width is built.
+
+## Installing the kit
+
+The PCSI kit installs the library, headers and `pcre2test` under `[PCRE2]`, and
+`PCRE2$STARTUP.COM` into `SYS$STARTUP`, which defines the rooted logical name `PCRE2$ROOT`:
+
+```
+PCRE2$ROOT:[INCLUDE]PCRE2.H, PCRE2POSIX.H
+PCRE2$ROOT:[LIB]PCRE2-8.OLB, PCRE2-POSIX.OLB
+PCRE2$ROOT:[BIN]PCRE2TEST.EXE
+PCRE2$ROOT:[DOC]README.VMS, LICENCE.MD, NEWS., PCRE2.TXT, PCRE2TEST.TXT
+```
+
+A kit downloaded through a non-VMS system loses its record format. Restore it, then install:
+
+```
+$ SET FILE/ATTRIBUTE=(RFM:FIX,LRL:8192,MRS:8192,RAT:NONE) ISSINOHO-*-PCRE2-V1049-1-1.PCSI
+$ PRODUCT INSTALL PCRE2 /PRODUCER=ISSINOHO /SOURCE=dev:[dir]
+```
+
+To define `PCRE2$ROOT` at every boot, add `$ @SYS$STARTUP:PCRE2$STARTUP.COM` to
+`SYS$MANAGER:SYSTARTUP_VMS.COM`. Then build against it as in
+[Use the library](#3-use-the-library). `PRODUCT REMOVE PCRE2` removes the product and
+deassigns `PCRE2$ROOT`.
+
+You don't need this kit to run grep: [GNU grep for OpenVMS](https://github.com/issinoho/vms-grep)
+links PCRE2 statically. The kit is for building your own programs.
 
 ## Repository layout
 
@@ -131,7 +158,8 @@ tools/build.sh x86 && tools/test.sh x86
 
 ### 3. Use the library
 
-Point your build at the install tree, for example with
+Install the PCSI kit (see [Installing the kit](#installing-the-kit)), or point your
+build at the install tree, for example with
 `$ DEFINE PCRE2$ROOT dev:[dir.PCRE2-10_49.INSTALL_IA64.]` (a rooted logical name).
 - **Compile** with `/INCLUDE=PCRE2$ROOT:[INCLUDE]` and `/DEFINE=PCRE2_CODE_UNIT_WIDTH=8`.
 - **Link** with `PCRE2$ROOT:[LIB]PCRE2-8.OLB/LIBRARY`.
@@ -142,7 +170,7 @@ Point your build at the install tree, for example with
 
 1. ~~Build grep against this library to enable `grep -P`~~: done in
    [vms-grep v3.12-vms3](https://github.com/issinoho/vms-grep/releases/tag/v3.12-vms3).
-2. A PCSI kit for PCRE2 itself (library, headers, `pcre2test`).
+2. A PCSI kit for PCRE2 itself (library, headers, `pcre2test`): built; `tools/kit.sh <node>`.
 3. A port to OpenVMS **Alpha**, alongside IA64 and x86-64.
 4. Next port: **GNU sed**, following on from grep and PCRE2 with exactly the same methods
    and roadmap ([vms-sed](https://github.com/issinoho/vms-sed)).

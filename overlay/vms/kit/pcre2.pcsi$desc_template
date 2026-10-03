@@ -1,0 +1,35 @@
+--
+-- PCSI product description for the PCRE2 library on OpenVMS.
+-- Template: tools/prepare.sh substitutes @PRODUCER@, @BASE@ and @PCSIVERSION@.
+--
+product @PRODUCER@ @BASE@ PCRE2 @PCSIVERSION@ full ;
+
+    information RELEASE_NOTES phase after ;
+
+    directory [PCRE2] ;
+    directory [PCRE2.BIN] ;
+    directory [PCRE2.DOC] ;
+    directory [PCRE2.INCLUDE] ;
+    directory [PCRE2.LIB] ;
+
+    file [PCRE2.INCLUDE]PCRE2.H ;
+    file [PCRE2.INCLUDE]PCRE2POSIX.H ;
+    file [PCRE2.LIB]PCRE2-8.OLB ;
+    file [PCRE2.LIB]PCRE2-POSIX.OLB ;
+    file [PCRE2.BIN]PCRE2TEST.EXE ;
+    file [SYS$STARTUP]PCRE2$STARTUP.COM ;
+    file [PCRE2.DOC]README.VMS ;
+    file [PCRE2.DOC]LICENCE.MD ;
+    file [PCRE2.DOC]NEWS. ;
+    file [PCRE2.DOC]PCRE2.TXT ;
+    file [PCRE2.DOC]PCRE2TEST.TXT ;
+
+    -- Define PCRE2$ROOT now and print the post-installation tasks (PCSI shows
+    -- only the title of an information message unless /HELP is given).
+    execute postinstall "@PCSI$DESTINATION:[SYS$STARTUP]PCRE2$STARTUP.COM INSTALL" interactive ;
+    -- On removal, deassign PCRE2$ROOT.
+    execute install "CONTINUE" remove "@PCSI$DESTINATION:[SYS$STARTUP]PCRE2$STARTUP.COM REMOVE" ;
+
+    information POST_INSTALL phase after ;
+
+end product ;
