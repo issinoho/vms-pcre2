@@ -22,7 +22,7 @@ Work in progress.
 |---|---|---|
 | Library (8-bit, Unicode, no JIT) builds with MMS | yes | yes |
 | `pcre2test` test suites (8-bit, no JIT) | 23 pass, 0 fail | 23 pass, 0 fail (1 expected: locale data) |
-| Used by grep for `grep -P` | not yet | not yet |
+| Used by grep for `grep -P` ([v3.12-vms3](https://github.com/issinoho/vms-grep/releases/tag/v3.12-vms3)) | yes | yes |
 | PCSI kit | planned | planned |
 
 ## What gets built
@@ -140,8 +140,8 @@ Point your build at the install tree, for example with
 
 ## Roadmap
 
-1. Build grep against this library to enable `grep -P`
-   ([vms-grep](https://github.com/issinoho/vms-grep)).
+1. ~~Build grep against this library to enable `grep -P`~~: done in
+   [vms-grep v3.12-vms3](https://github.com/issinoho/vms-grep/releases/tag/v3.12-vms3).
 2. A PCSI kit for PCRE2 itself (library, headers, `pcre2test`).
 3. A port to OpenVMS **Alpha**, alongside IA64 and x86-64.
 4. Next port: **GNU sed**, following on from grep and PCRE2 with exactly the same methods
