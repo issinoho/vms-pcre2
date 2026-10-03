@@ -30,7 +30,9 @@ def pcre2_sources(cmake):
 def rule(obj, path, flags='$(LIB_CFLAGS)'):
     d, f = os.path.split(path)
     vdir = '[.' + '.'.join(p.upper() for p in d.split('/')) + ']' if d else '[]'
-    return ['%s : %s%s' % (obj, vdir, f),
+    # Also depend on config.h and pcre2.h: MMS here tracks no header
+    # dependencies, and a configuration change must rebuild everything.
+    return ['%s : %s%s, [.SRC]config.h, [.SRC]pcre2.h' % (obj, vdir, f),
             '\t$(CC) %s /OBJECT=$(MMS$TARGET) $(MMS$SOURCE)' % flags, '']
 
 
