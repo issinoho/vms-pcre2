@@ -144,6 +144,8 @@ Point your build at the install tree, for example with
    ([vms-grep](https://github.com/issinoho/vms-grep)).
 2. A PCSI kit for PCRE2 itself (library, headers, `pcre2test`).
 3. A port to OpenVMS **Alpha**, alongside IA64 and x86-64.
+4. Next port: **GNU sed**, following on from grep and PCRE2 with exactly the same methods
+   and roadmap ([vms-sed](https://github.com/issinoho/vms-sed)).
 
 ## Artwork
 
