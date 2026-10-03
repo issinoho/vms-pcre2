@@ -1,0 +1,26 @@
+Subject: pcre2_compile: work around a VSI C IA64 optimiser bug in option unsetting
+
+On OpenVMS IA64 (VSI C 7.4) inline option unsetting such as (?-x:...) and
+(?-r) had no effect: the optimiser loses the writes made to unset/xunset
+through the optset/xoptset pointers.  Tests 1, 2, 5 and 7 failed; they pass
+with this file unoptimised, and with these variables volatile.
+
+--- a/src/pcre2_compile.c	2026-10-03 11:16:50.252106158 +0100
++++ b/src/pcre2_compile.c	2026-10-03 11:16:50.287467706 +0100
+@@ -3227,8 +3227,15 @@
+   {
+   int prev_expect_cond_assert;
+   uint32_t min_repeat = 0, max_repeat = 0;
+-  uint32_t set, unset, *optset;
++  /* volatile: VSI C 7.4 on OpenVMS IA64 mis-optimises the writes made through
++optset/xoptset to unset/xunset, so that (?-x) and similar have no effect. */
++#ifdef __VMS
++volatile uint32_t set, unset, *optset;
++  volatile uint32_t xset, xunset, *xoptset;
++#else
++uint32_t set, unset, *optset;
+   uint32_t xset, xunset, *xoptset;
++#endif
+   uint32_t terminator;
+   uint32_t prev_meta_quantifier;
+   BOOL prev_okquantifier;

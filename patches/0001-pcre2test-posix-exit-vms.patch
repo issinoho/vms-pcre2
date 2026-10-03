@@ -1,0 +1,20 @@
+Subject: pcre2test: keep the exit status when built with POSIX exit semantics on VMS
+
+pcre2test always returns SS$_NORMAL on VMS and reports results through DCL
+symbols.  Built with _POSIX_EXIT (/MAIN=POSIX_EXIT), SS$_NORMAL (1) becomes
+exit code 1, so every run looked like a failure.  Keep the C exit value then.
+
+--- a/src/pcre2test.c	2026-10-03 11:06:16.559321812 +0100
++++ b/src/pcre2test.c	2026-10-03 11:06:16.581712526 +0100
+@@ -4458,7 +4458,10 @@
+ free(tables3);
+ free_globals();
+ 
+-#if defined(__VMS)
++/* With POSIX exit semantics (_POSIX_EXIT, /MAIN=POSIX_EXIT) the exit status
++is the C value, as on other systems, so keep yield; otherwise values are
++returned via DCL symbols. */
++#if defined(__VMS) && !defined(_POSIX_EXIT)
+   yield = SS$_NORMAL;  /* Return values via DCL symbols */
+ #endif
+ 

@@ -1,1 +1,3 @@
 # Ordered list of patches applied to the upstream tree (one per line).
+0001-pcre2test-posix-exit-vms.patch
+0002-pcre2-compile-vms-ia64-optimiser.patch
