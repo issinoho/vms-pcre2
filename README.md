@@ -16,14 +16,13 @@ VSI C.
 
 ## Status
 
-Work in progress.
 
 | | IA64 | x86-64 |
 |---|---|---|
 | Library (8-bit, Unicode, no JIT) builds with MMS | yes | yes |
 | `pcre2test` test suites (8-bit, no JIT) | 23 pass, 0 fail | 23 pass, 0 fail (1 expected: locale data) |
 | Used by grep for `grep -P` ([v3.12-vms3](https://github.com/issinoho/vms-grep/releases/tag/v3.12-vms3)) | yes | yes |
-| PCSI kit (`ISSINOHO-<base>-PCRE2-V1049-1-1.PCSI`) | built | built |
+| PCSI kit ([v10.49-vms1](https://github.com/issinoho/vms-pcre2/releases/tag/v10.49-vms1)) | `ISSINOHO-I64VMS-PCRE2-V1049-1-1.PCSI` | `ISSINOHO-X86VMS-PCRE2-V1049-1-1.PCSI` |
 
 ## What gets built
 
@@ -38,7 +37,9 @@ width is built.
 
 ## Installing the kit
 
-The PCSI kit installs the library, headers and `pcre2test` under `[PCRE2]`, and
+Download the kit for your architecture from the
+[latest release](https://github.com/issinoho/vms-pcre2/releases/latest) and check it against
+the release's `SHA256SUMS`. The PCSI kit installs the library, headers and `pcre2test` under `[PCRE2]`, and
 `PCRE2$STARTUP.COM` into `SYS$STARTUP`, which defines the rooted logical name `PCRE2$ROOT`:
 
 ```
@@ -170,7 +171,8 @@ build at the install tree, for example with
 
 1. ~~Build grep against this library to enable `grep -P`~~: done in
    [vms-grep v3.12-vms3](https://github.com/issinoho/vms-grep/releases/tag/v3.12-vms3).
-2. A PCSI kit for PCRE2 itself (library, headers, `pcre2test`): built; `tools/kit.sh <node>`.
+2. ~~A PCSI kit for PCRE2 itself (library, headers, `pcre2test`)~~: released as
+   [v10.49-vms1](https://github.com/issinoho/vms-pcre2/releases/tag/v10.49-vms1).
 3. A port to OpenVMS **Alpha**, alongside IA64 and x86-64.
 4. Next port: **GNU sed**, following on from grep and PCRE2 with exactly the same methods
    and roadmap ([vms-sed](https://github.com/issinoho/vms-sed)).
