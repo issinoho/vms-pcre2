@@ -188,7 +188,9 @@ build at the install tree, for example with
    and roadmap ([vms-sed](https://github.com/issinoho/vms-sed)). Under way.
 5. Then **GNU awk** (gawk), the same way ([vms-awk](https://github.com/issinoho/vms-awk)).
 6. Then **GNU wget**, the same way ([vms-wget](https://github.com/issinoho/vms-wget)).
-7. Then **curl**, the same way ([vms-curl](https://github.com/issinoho/vms-curl)).
+7. Then **curl**, the same way ([vms-curl](https://github.com/issinoho/vms-curl)). VSI ships
+   a curl kit, but on VSI's slower release cycle; this port will follow curl's own releases
+   in lock-step.
 
 ## Artwork
 
