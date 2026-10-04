@@ -14,6 +14,8 @@ $ set default 'vmsdir'
 $ set default [-]
 $ top = f$environment("DEFAULT")
 $ arch = f$edit(f$getsyi("ARCH_NAME"), "UPCASE")
+$! PCRE2_TEST_VARIANT CLANG: test the clang build (BUILD.COM ... CLANG).
+$ if f$edit(f$trnlnm("PCRE2_TEST_VARIANT"), "UPCASE") .eqs. "CLANG" then arch = arch + "_CLANG"
 $ bin = f$parse("[.BIN_''arch']PCRE2TEST.EXE")
 $ pcre2test :== $'bin'
 $!

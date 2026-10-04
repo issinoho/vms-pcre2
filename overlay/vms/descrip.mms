@@ -10,6 +10,12 @@
 !   [.BIN_<arch>]PCRE2TEST.EXE        the test program
 !   [.INSTALL_<arch>.INCLUDE]         PCRE2.H, PCRE2POSIX.H  (install tree used
 !   [.INSTALL_<arch>.LIB]             PCRE2-8.OLB, PCRE2-POSIX.OLB  by other ports)
+!
+! With the macro CLANG (BUILD.COM CLANG, x86-64 only) the same sources are
+! compiled with VSI C++'s clang instead, for programs built with clang: it is
+! LP64 (long and pointers 64-bit) where VSI C is ILP32, so the two kinds of
+! object cannot be mixed.  ARCH is then X86_64_CLANG, and everything goes to
+! [.OBJ_X86_64_CLANG], [.BIN_X86_64_CLANG] and [.INSTALL_X86_64_CLANG].
 
 .IFDEF ARCH
 .ELSE
@@ -24,11 +30,19 @@ INST = [.INSTALL_$(ARCH)
 
 .INCLUDE [.VMS]SOURCES.MMS
 
+.IFDEF CLANG
+CC = clang
+CC_OBJECT = -c -o
+CFLAGS = $(CLANG_FLAGS) -I./src -DHAVE_CONFIG_H
+LIB_CFLAGS = $(CFLAGS) -DPCRE2_CODE_UNIT_WIDTH=8
+.ELSE
 CC = CC
+CC_OBJECT = /OBJECT=
 ! The libraries are built for 8-bit code units; pcre2test chooses its own.
 CFLAGS = $(CC_QUAL)/NOLIST/INCLUDE_DIRECTORY=("./src")/DEFINE=($(CC_DEFS),HAVE_CONFIG_H)
 LIB_CFLAGS = $(CC_QUAL)/NOLIST/INCLUDE_DIRECTORY=("./src")-
 	/DEFINE=($(CC_DEFS),HAVE_CONFIG_H,PCRE2_CODE_UNIT_WIDTH=8)
+.ENDIF
 
 LIB = $(OBJ)PCRE2-8.OLB
 PLIB = $(OBJ)PCRE2-POSIX.OLB

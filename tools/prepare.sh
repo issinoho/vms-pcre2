@@ -49,7 +49,7 @@ cp "$stage/src/pcre2_chartables.c.dist" "$stage/src/pcre2_chartables.c"
 
 step "MMS source list"
 python3 "$top/tools/gen_mms.py" "$stage/CMakeLists.txt" "$cfgdir/ccflags.txt" \
-    > "$stage/vms/sources.mms"
+    "$cfgdir/clangflags.txt" > "$stage/vms/sources.mms"
 printf 'VERSION=%s\nKIT_VERSION=%s-vms%s\n' "$UPSTREAM_VERSION" "$UPSTREAM_VERSION" \
     "$VMS_PATCH_LEVEL" > "$stage/vms/version.env"
 

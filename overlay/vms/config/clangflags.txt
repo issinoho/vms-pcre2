@@ -1,0 +1,1 @@
+-std=gnu99 -O2 -names2=shortened -pointer-size=argv64 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -D_LARGEFILE -D_USE_STD_STAT -D_POSIX_EXIT

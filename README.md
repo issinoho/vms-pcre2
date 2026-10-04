@@ -21,6 +21,7 @@ VSI C.
 | Library (8-bit, Unicode, no JIT) builds with MMS | yes | yes |
 | `pcre2test` test suites (8-bit, no JIT) | 23 pass, 0 fail | 23 pass, 0 fail (1 expected: locale data) |
 | Used by grep for `grep -P` ([v3.12-vms3](https://github.com/issinoho/vms-grep/releases/tag/v3.12-vms3)) | yes | yes |
+| Clang (LP64) build for programs compiled with clang (`BUILD ALL "" CLANG`) | n/a | builds; tests 21 pass, 2 fail (see below) |
 | PCSI kit ([v10.49-vms1](https://github.com/issinoho/vms-pcre2/releases/tag/v10.49-vms1)) | `ISSINOHO-I64VMS-PCRE2-V1049-1-1.PCSI` | `ISSINOHO-X86VMS-PCRE2-V1049-1-1.PCSI` |
 
 ## What gets built
@@ -34,6 +35,18 @@ VSI C.
   `PCRE2POSIX.H`, and `[.LIB]` holding both libraries): this is what other ports build
   against.
 - **A PCSI kit** (`[.KIT_<arch>]`), which installs the same files system-wide.
+
+**Clang (LP64) build (x86-64):** VSI C is ILP32 (`long` and pointers 32-bit) and VSI C++'s
+clang is LP64, so objects from the two cannot be mixed. `@[.VMS]BUILD ALL "" CLANG` (or
+`tools/build.sh x86 ALL "" CLANG`) compiles the same sources with clang into
+`[.OBJ_X86_64_CLANG]`, `[.BIN_X86_64_CLANG]` and the install tree `[.INSTALL_X86_64_CLANG]`
+(flags in `overlay/vms/config/clangflags.txt`). Its first user is
+[MariaDB for OpenVMS](https://github.com/issinoho/vms-mariadb). `VARIANT=CLANG tools/test.sh x86`
+runs the test suites against it: 21 pass; the two failures are in `pcre2test`, not the
+library. Test 0 checks `pcre2test`'s exit codes, which need the POSIX exit that VSI C gets
+from `/MAIN=POSIX_EXIT`. Test 2 fails because the C RTL's `strtoul()` returns 32 bits to
+clang code (`long` is 64-bit in clang, 32-bit in the C RTL), so `ovector=11000000000` is
+not rejected.
 
 JIT compilation is not available: SLJIT has no OpenVMS support. Only the 8-bit code unit
 width is built.

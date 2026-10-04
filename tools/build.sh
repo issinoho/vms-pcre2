@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# build.sh <node> [target] [KEEP_GOING] - push the prepared tree and run [.VMS]BUILD.COM on <node>.
+# build.sh <node> [target] [KEEP_GOING] [CLANG] - push the prepared tree and run [.VMS]BUILD.COM on <node>.
+# CLANG (x86-64): build with clang into the X86_64_CLANG trees (LP64, for clang programs).
 # The build runs in an ssh session (batch queues may be busy); its log is printed and saved to out/build-<node>.log.
 set -euo pipefail
 
@@ -7,6 +8,7 @@ top=$(cd "$(dirname "$0")/.." && pwd)
 node=${1:?usage: build.sh <node> [target]}
 target=${2:-ALL}
 keep=${3:-}
+variant=${4:-}
 . "$top/upstream.conf"
 remote=$(echo "$UPSTREAM_NAME-$UPSTREAM_VERSION" | tr . _ | tr a-z A-Z)
 read -r _ _ _ _ _ WORKDIR _ < <(awk -v n="$node" '$1==n' "$top/tools/nodes.conf")
@@ -18,7 +20,7 @@ cat > "$job" <<DCL
 \$ set noon
 \$ set process/parse_style=extended
 \$ purge/nolog ${WORKDIR%]}.$remote...]*.*
-\$ @${WORKDIR%]}.$remote.VMS]BUILD.COM $target $keep
+\$ @${WORKDIR%]}.$remote.VMS]BUILD.COM "$target" "$keep" "$variant"
 DCL
-VMS_TIMEOUT=${VMS_BUILD_TIMEOUT:-5400} "$top/tools/vms.sh" "$node" run "$job" | tee "$top/out/build-$node.log"
-grep -q 'BUILD: done' "$top/out/build-$node.log"
+VMS_TIMEOUT=${VMS_BUILD_TIMEOUT:-5400} "$top/tools/vms.sh" "$node" run "$job" | tee "$top/out/build-$node$variant.log"
+grep -q 'BUILD: done' "$top/out/build-$node$variant.log"

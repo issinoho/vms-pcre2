@@ -1,0 +1,19 @@
+Subject: pcre2test.c: standard #include forms for the VMS headers
+
+`#include descrip` and `#include lib$routines` are VAX C forms that VSI C
+accepts but clang (VSI C++ on x86-64, used for the LP64 build) rejects.
+`<descrip.h>` and `<lib$routines.h>` work with both.
+
+--- a/src/pcre2test.c	2026-10-04 18:21:00.058996680 +0100
++++ b/src/pcre2test.c	2026-10-04 18:21:00.127370957 +0100
+@@ -174,8 +174,8 @@
+ #ifdef __VMS
+ #include <ssdef.h>
+ /* These two includes came from [2]. */
+-#include descrip
+-#include lib$routines
++#include <descrip.h>
++#include <lib$routines.h>
+ /* void vms_setsymbol( char *, char *, int ); Original code from [1]. */
+ #endif
+ 
