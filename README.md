@@ -196,7 +196,8 @@ build at the install tree, for example with
    [vms-grep v3.12-vms3](https://github.com/issinoho/vms-grep/releases/tag/v3.12-vms3).
 2. ~~A PCSI kit for PCRE2 itself (library, headers, `pcre2test`)~~: released as
    [v10.49-vms1](https://github.com/issinoho/vms-pcre2/releases/tag/v10.49-vms1).
-3. Wget for OpenVMS also links this library (`--regex-type=pcre`).
+3. ~~Wget for OpenVMS links this library (`--regex-type=pcre`)~~: done in
+   [vms-wget v1.25.0-vms2](https://github.com/issinoho/vms-wget/releases/tag/v1.25.0-vms2).
 4. A port to OpenVMS **Alpha**, alongside IA64 and x86-64.
 
 The family of ports, all for IA64 and x86-64, each following its upstream releases:
@@ -211,7 +212,7 @@ The family of ports, all for IA64 and x86-64, each following its upstream releas
 | curl — [vms-curl](https://github.com/issinoho/vms-curl) | [v8.22.0-vms1](https://github.com/issinoho/vms-curl/releases/tag/v8.22.0-vms1) | alongside VSI's curl kit, following curl's own releases |
 | GNU Wget — [vms-wget](https://github.com/issinoho/vms-wget) | [v1.25.0-vms2](https://github.com/issinoho/vms-wget/releases/tag/v1.25.0-vms2) | the web retriever |
 | GNU m4 — [vms-m4](https://github.com/issinoho/vms-m4) | [v1.4.21-vms1](https://github.com/issinoho/vms-m4/releases/tag/v1.4.21-vms1) | the macro processor |
-| GNU Bison — [vms-bison](https://github.com/issinoho/vms-bison) | [v3.8.2-vms2](https://github.com/issinoho/vms-bison/releases/tag/v3.8.2-vms2) | runs GNU m4 |
+| GNU Bison — [vms-bison](https://github.com/issinoho/vms-bison) | [v3.8.2-vms2](https://github.com/issinoho/vms-bison/releases/tag/v3.8.2-vms2) | the parser generator; runs GNU m4 |
 | flex — [vms-flex](https://github.com/issinoho/vms-flex) | [v2.6.4-vms1](https://github.com/issinoho/vms-flex/releases/tag/v2.6.4-vms1) | the scanner generator; runs GNU m4 |
 | GNU make — [vms-make](https://github.com/issinoho/vms-make) | [v4.4.1-vms1](https://github.com/issinoho/vms-make/releases/tag/v4.4.1-vms1) | built with make's own VMS port |
 | GNU diffutils — [vms-diffutils](https://github.com/issinoho/vms-diffutils) | [v3.12-vms1](https://github.com/issinoho/vms-diffutils/releases/tag/v3.12-vms1) | cmp, diff, diff3, sdiff |
