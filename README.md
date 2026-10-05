@@ -4,10 +4,17 @@
 
 # PCRE2 for OpenVMS
 
-A port of the [PCRE2](https://github.com/PCRE2Project/pcre2) regular-expression library
-(10.49) to OpenVMS on **IA64** and **x86-64**, kept as a thin layer over the official
-release. Its first user is [GNU grep for OpenVMS](https://github.com/issinoho/vms-grep),
-where it provides `grep -P`.
+A port of the [PCRE2](https://github.com/PCRE2Project/pcre2) regular-expression library (10.49) to
+OpenVMS on **IA64** and **x86-64**, kept as a thin layer over the official release. Its first user
+is [GNU grep for OpenVMS](https://github.com/issinoho/vms-grep), where it provides `grep -P`. It
+belongs to the same family as [GNU grep](https://github.com/issinoho/vms-grep),
+[GNU sed](https://github.com/issinoho/vms-sed), [GNU awk](https://github.com/issinoho/vms-awk),
+[GNU make](https://github.com/issinoho/vms-make),
+[GNU diffutils](https://github.com/issinoho/vms-diffutils),
+[GNU patch](https://github.com/issinoho/vms-patch), [GNU m4](https://github.com/issinoho/vms-m4),
+[GNU Bison](https://github.com/issinoho/vms-bison), [flex](https://github.com/issinoho/vms-flex),
+[GNU Wget](https://github.com/issinoho/vms-wget), [curl](https://github.com/issinoho/vms-curl) and
+[zlib](https://github.com/issinoho/vms-zlib) for OpenVMS.
 
 Like vms-grep, this repository holds **only our changes**. Every build starts from the
 signed release tarball, which is verified against the PCRE2 maintainer's key in `keys/`.
