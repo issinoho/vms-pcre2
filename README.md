@@ -4,6 +4,8 @@
 
 # PCRE2 for OpenVMS
 
+[![Downloads](https://img.shields.io/github/downloads/issinoho/vms-pcre2/total?label=downloads)](https://github.com/issinoho/vms-pcre2/releases)
+
 A port of the [PCRE2](https://github.com/PCRE2Project/pcre2) regular-expression library (10.49) to
 OpenVMS on **IA64** and **x86-64**, kept as a thin layer over the official release. Its first user
 is [GNU grep for OpenVMS](https://github.com/issinoho/vms-grep), where it provides `grep -P`. It
