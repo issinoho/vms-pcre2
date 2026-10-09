@@ -7,6 +7,7 @@
 [![Release](https://img.shields.io/github/v/release/issinoho/vms-pcre2?label=release)](https://github.com/issinoho/vms-pcre2/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/issinoho/vms-pcre2/total?label=downloads)](https://github.com/issinoho/vms-pcre2/releases)
 ![OpenVMS](https://img.shields.io/badge/OpenVMS-IA64%20%7C%20x86--64-blue)
+[![License](https://img.shields.io/badge/license-BSD--3--Clause%20WITH%20PCRE2--exception-blue)](COPYING)
 
 A port of the [PCRE2](https://github.com/PCRE2Project/pcre2) regular-expression library (10.49) to
 OpenVMS on **IA64** and **x86-64**, kept as a thin layer over the official release. Its first user
