@@ -6,11 +6,11 @@
 
 [![Release](https://img.shields.io/github/v/release/issinoho/vms-pcre2?label=release)](https://github.com/issinoho/vms-pcre2/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/issinoho/vms-pcre2/total?label=downloads)](https://github.com/issinoho/vms-pcre2/releases)
-![OpenVMS](https://img.shields.io/badge/OpenVMS-IA64%20%7C%20x86--64-blue)
+![OpenVMS](https://img.shields.io/badge/OpenVMS-IA64%20%7C%20x86--64%20%7C%20Alpha-blue)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause%20WITH%20PCRE2--exception-blue)](COPYING)
 
 A port of the [PCRE2](https://github.com/PCRE2Project/pcre2) regular-expression library (10.49) to
-OpenVMS on **IA64** and **x86-64**, kept as a thin layer over the official release. Its first user
+OpenVMS on **IA64**, **x86-64** and **Alpha** (vms2, Alpha only: the same PCRE2, with a test runner that needs no Perl), kept as a thin layer over the official release. Its first user
 is [GNU grep for OpenVMS](https://github.com/issinoho/vms-grep), where it provides `grep -P`. It
 belongs to the same family as [GNU grep](https://github.com/issinoho/vms-grep),
 [GNU sed](https://github.com/issinoho/vms-sed), [GNU awk](https://github.com/issinoho/vms-awk),
@@ -145,8 +145,10 @@ you can also copy it to VMS any way you like and build there by hand.
 ### What you need
 
 - **Linux host:** git, bash, python3, curl and gpg. ssh/sftp too, for the automated route.
-- **OpenVMS IA64 or x86-64:** VSI C and MMS. OpenSSH for the automated route. VSI Perl for
-  the tests. Tested on IA64 V8.4-2L3 with VSI C 7.4, and on x86-64 E9.2-4 with VSI C 7.7.
+- **OpenVMS IA64, x86-64 or Alpha:** VSI C and MMS. OpenSSH for the automated route. VSI Perl
+  for the tests where there is one; without it (Alpha) a DCL runner does the same. Tested on
+  IA64 V8.4-2L3 with VSI C 7.4, on x86-64 E9.2-4 with VSI C 7.7, and on Alpha V8.4-2L2 with
+  VSI C 7.4 (23 passed, 0 failed, 8 skipped, as IA64).
 
 ### 1. Prepare the source tree (Linux)
 
@@ -212,7 +214,8 @@ build at the install tree, for example with
    [v10.49-vms1](https://github.com/issinoho/vms-pcre2/releases/tag/v10.49-vms1).
 3. ~~Wget for OpenVMS links this library (`--regex-type=pcre`)~~: done in
    [vms-wget v1.25.0-vms2](https://github.com/issinoho/vms-wget/releases/tag/v1.25.0-vms2).
-4. A port to OpenVMS **Alpha**, alongside IA64 and x86-64.
+4. ~~A port to OpenVMS **Alpha**~~: released as
+   [v10.49-vms2](https://github.com/issinoho/vms-pcre2/releases/tag/v10.49-vms2) (Alpha only).
 
 The family of ports, all for IA64 and x86-64 (MariaDB: x86-64 only), each following its upstream releases:
 
