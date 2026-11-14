@@ -1,4 +1,4 @@
-$! RUN_TESTS.COM - run PCRE2's test suites with VSI Perl
+$! RUN_TESTS.COM - run PCRE2's test suites with VSI Perl (or, where Perl is missing, RUN_TESTS_NOPERL.COM)
 $!
 $! Usage:  @[.VMS]RUN_TESTS [test-number ...]
 $! Needs a built [.BIN_<arch>]PCRE2TEST.EXE and VSI Perl.  Output files go to
@@ -48,14 +48,16 @@ $ if f .eqs. "" then goto perl_done
 $ perl_setup = f
 $ goto perl_loop
 $perl_done:
+$! Upper-case pcre2test options (-LM, -C ...) need extended parsing.
+$ set process/parse_style=extended
 $ if perl_setup .eqs. ""
 $ then
-$   write sys$error "RUN_TESTS: VSI Perl not found"
+$!  No VSI Perl (OpenVMS Alpha has none): the DCL runner does the same work.
+$   @[.vms]run_tests_noperl 'p1' 'p2' 'p3' 'p4' 'p5' 'p6' 'p7' 'p8'
+$   status = $status
 $   goto finish
 $ endif
 $ @'perl_setup'
-$! Upper-case pcre2test options (-LM, -C ...) need extended parsing.
-$ set process/parse_style=extended
 $ perl vms/run_tests.pl 'p1' 'p2' 'p3' 'p4' 'p5' 'p6' 'p7' 'p8'
 $ status = $status
 $finish:

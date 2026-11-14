@@ -56,6 +56,7 @@ $ copy/nolog 'inst'.LIB]PCRE2-8.OLB,PCRE2-POSIX.OLB 'mat'
 $ copy/nolog 'inst'.INCLUDE]PCRE2.H,PCRE2POSIX.H 'mat'
 $ copy/nolog [.BIN_'arch']PCRE2TEST.EXE 'mat'
 $ copy/nolog [.VMS.KIT]PCRE2$STARTUP.COM,README.VMS 'mat'
+$ if base .eqs. "AXPVMS" then copy/nolog [.VMS.KIT]README_AXPVMS.VMS 'mat'README.VMS
 $ copy/nolog [.VMS.KIT.DOC]*.* 'mat'
 $ matspec = f$parse(mat,,,"DEVICE","NO_CONCEAL") + f$parse(mat,,,"DIRECTORY","NO_CONCEAL")
 $!

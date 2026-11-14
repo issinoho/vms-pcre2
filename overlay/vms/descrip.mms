@@ -1,4 +1,4 @@
-! DESCRIP.MMS - build PCRE2 (8-bit, Unicode, no JIT) for OpenVMS IA64 / x86-64
+! DESCRIP.MMS - build PCRE2 (8-bit, Unicode, no JIT) for OpenVMS IA64 / x86-64 / Alpha
 !
 ! Run via [.VMS]BUILD.COM, which passes ARCH and creates the output
 ! directories.  Source lists and per-object rules come from [.VMS]SOURCES.MMS,

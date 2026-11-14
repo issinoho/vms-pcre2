@@ -70,7 +70,9 @@ for base in I64VMS X86VMS AXPVMS; do
     subst $base "" < "$kit/pcre2.pcsi\$text_template" > "$kit/PCRE2-$base.PCSI\$TEXT"
 done
 rm -f "$kit/pcre2.pcsi\$desc_template" "$kit/pcre2.pcsi\$text_template"
-subst "" "IA64 and x86-64" < "$kit/readme.vms" > "$kit/README.VMS"; rm -f "$kit/readme.vms"
+subst "" "IA64 and x86-64" < "$kit/readme.vms" > "$kit/README.VMS"
+# The Alpha kit has its own README (the others are unchanged, so their kits stay as released).
+subst "" "Alpha" < "$kit/readme.vms" > "$kit/README_AXPVMS.VMS"; rm -f "$kit/readme.vms"
 mkdir -p "$kit/doc"
 cp "$stage/LICENCE.md" "$kit/doc/LICENCE.MD"
 cp "$stage/NEWS" "$kit/doc/NEWS."
